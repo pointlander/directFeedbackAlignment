@@ -2,6 +2,7 @@
 
 logis =@(x) 1./(1+exp(-x));
 dlogis =@(x) logis(x).*(1-logis(x));
+dstep =@(x) x;
 
 %Input Output
 in = [1,1 ; 0,1 ; 1,0 ; 0,0]';
@@ -10,7 +11,7 @@ y = zeros(size(out));
 
 n_hidden = 10; % Number of hidden units
 num_iterations = 1000; %Number of learning steps
-num_traces = 4000;
+num_traces = 1;
 
 for jj = 1:num_traces
     
@@ -40,19 +41,21 @@ B2 = randn(n_hidden,1);
 
         %Forward Pass 
         a1 = w1*in;
-        z1 = logis(a1);
+        z1 = step(a1);
 
         a2 = w2*z1;
-        z2 = logis(a2);
+        z2 = step(a2);
 
         ay = w3*z2;
-        y = logis(ay);
+        y = step(ay);
 
         e = y-out;
 
+	e
+	y
         %Feedback 
-        d_a1 = (B1*e).*dlogis(a1);
-        d_a2 = (B2*e).*dlogis(a2);
+        d_a1 = (B1*e).*dstep(a1);
+        d_a2 = (B2*e).*dstep(a2);
 
         %Weight Updates
         dw1 = -d_a1*in';
