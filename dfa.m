@@ -55,8 +55,8 @@ B2 = randn(n_hidden,1);
 	y
 	if (sum(abs(e)) > 0)
         	%Feedback 
-        	d_a1 = (B1*e).*dstep(a1);
-        	d_a2 = (B2*e).*dstep(a2);
+        	d_a1 = (B1*e).*dlogis(a1);
+        	d_a2 = (B2*e).*dlogis(a2);
 
         	%Weight Updates
         	dw1 = -d_a1*in';
