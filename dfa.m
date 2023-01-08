@@ -53,19 +53,20 @@ B2 = randn(n_hidden,1);
 
 	e
 	y
-        %Feedback 
-        d_a1 = (B1*e).*dstep(a1);
-        d_a2 = (B2*e).*dstep(a2);
+	if (sum(abs(e)) > 0)
+        	%Feedback 
+        	d_a1 = (B1*e).*dstep(a1);
+        	d_a2 = (B2*e).*dstep(a2);
 
-        %Weight Updates
-        dw1 = -d_a1*in';
-        dw2 = -d_a2*z1';
-        dw3 = -e*z2';
+        	%Weight Updates
+        	dw1 = -d_a1*in';
+        	dw2 = -d_a2*z1';
+        	dw3 = -e*z2';
 
-        w1 = w1 + dw1;
-        w2 = w2 + dw2;
-        w3 = w3 + dw3;
-
+        	w1 = w1 + dw1;
+        	w2 = w2 + dw2;
+        	w3 = w3 + dw3;
+	endif
         %Backprop
 
         %Forward Pass
@@ -102,6 +103,10 @@ B2 = randn(n_hidden,1);
 
     end
 end
+
+w1
+w2
+w3
 
 subplot(4,2,1); 
 plot(y_store(1,:)'); title('1,1')
